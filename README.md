@@ -1,25 +1,74 @@
-# gnn_single_rigids
+# Graph network simulators for rigid objects
 
-TODO(b/259943130): Add a description for your new project, explain what is
-being released here, etc... Additional, the following sections are normally
-expected for all releases. Feel free to add additional sections if appropriate
-for your project.
+Code and parameters to accompany the CoRL 2022 paper
+**Graph Network Simulators can learn discontinuous, rigid contact dynamics** ([paper](https://openreview.net/pdf?id=rbIzq-I84i_))<br/>
+_Kelsey R. Allen*, Tatiana Lopez-Guevara*, Yulia Rubanova, Kimberly Stachenfeld,
+Alvaro Sanchez-Gonzalez, Peter Battaglia, Tobias Pfaff_
 
-## Installation
-
-Write instructions for how the user should install your code. The instructions
-should ideally be valid when copy-pasted. You can combine this with the Usage
-section if there's no separate installation step.
+The code here provides an implementation of the Encode-Process-Decode
+graph network architecture in jax, model weights for this architecture trained
+on 256 trajectories of real cube tosses from [contact-nets](https://proceedings.mlr.press/v155/pfrommer21a.html), and an example of rolling out an example validation trajectory
+from the ContactNets dataset. PLEASE BE AWARE the provided weights were trained
+on the [Contact-Nets](https://proceedings.mlr.press/v155/pfrommer21a.html) data
+and are unlikely to work for other datasets. Please retrain the weights using
+the method discussed in the paper (injecting noise during training, training
+without shape matching) if interested in using this code for a new dataset.
 
 ## Usage
 
-Write example usage of your code. The instructions should ideally be valid when
-copy-pasted, and will be used by your technical reviewer to verify that your
-package functions correctly.
+### in a google colab
+Open the [google colab](https://colab.research.google.com/github/deepmind/gnn_single_rigids/blob/master/demo_rollout.ipynb) and run all cells.
+
+### with jupyter notebook / locally
+To install the necessary requirements (run these commands from the directory
+that you wish to clone `gnn_single_rigids` into):
+
+```shell
+git clone https://github.com/deepmind/gnn_single_rigids.git
+python3 -m venv rigids_venv
+source rigids_venv/bin/activate
+pip install --upgrade pip
+pip install -r ./gnn_single_rigids/requirements.txt
+```
+When done with this codebase, you can deactivate the virtual environment with `deactivate` from
+the command line.
+
+Additionally install jupyter notebook if not already installed with
+`pip install notebook`
+
+Change into your new directory:
+
+```shell
+cd gnn_single_rigids
+```
+
+Download the dataset and model weights from google cloud:
+
+```shell
+wget -O ./gns_params.pkl https://storage.googleapis.com/dm_gnn_single_rigids/gns_params.pkl
+wget -O ./example_real_toss.pkl https://storage.googleapis.com/dm_gnn_single_rigids/example_real_toss.pkl
+```
+
+Now you should be ready to go! Open `demo_rollout.ipynb` inside
+a jupyter notebook and run *from third cell* onwards.
 
 ## Citing this work
 
-Add citation details here, usually a pastable BibTeX snippet.
+If you use this work, please cite the following paper
+```
+@misc{inversedesign_2022,
+  title = {Graph Network Simulators can learn discontinuous, rigid contact dynamics},
+  author = {Kelsey R. Allen and
+               Tatiana Lopez{-}Guevara and
+               Yulia Rubanova and
+               Kimberly L. Stachenfeld and
+               Alvaro Sanchez{-}Gonzalez and
+               Peter W. Battaglia and
+               Tobias Pfaff},
+  journal = {Conference on Robot Learning},
+  year = {2022},
+}
+```
 
 ## License and disclaimer
 
